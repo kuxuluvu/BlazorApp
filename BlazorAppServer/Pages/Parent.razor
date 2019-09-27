@@ -1,0 +1,41 @@
+﻿@using BlazorAppServer.Components
+
+@page "/parent"
+
+<h1> Parent</h1>
+
+
+
+<ChildComponent Title="Panel title from Parent"
+				OnClick="@ShowMessage"
+				ShowText="showText"
+				Year=" ParentYear">
+	Content of child
+</ChildComponent>
+<p><b>@messageText</b></p>
+
+<br />
+<p>ParentYear: @ParentYear</p>
+<button class="btn btn-success" @onclick="ChangeYear">
+	Change Year
+</button>
+
+
+@code {
+	private string messageText;
+	private bool showText;
+
+	[Parameter]
+	public int ParentYear { get; set; } = 1978;
+
+	public void ShowMessage()
+	{
+		showText = !showText;
+		messageText = showText ? "This is message text" : string.Empty;
+	}
+
+	public void ChangeYear()
+	{
+		ParentYear = 2000;
+	}
+}

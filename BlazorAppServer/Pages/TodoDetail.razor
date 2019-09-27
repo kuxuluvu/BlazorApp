@@ -1,0 +1,58 @@
+﻿@using BlazorAppServer.Data
+@inject TodoService TodoService
+@inject NavigationManager NavigationManager
+
+@page "/Todo/{Id}"
+@if (todo == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<h3>TodoDetail</h3>
+	<div class="todo-item">
+		<input type="checkbox" @bind="todo.IsDone" />
+		<input @bind="todo.Title" @bind:event="oninput" />
+		<button @onclick="Save">Save</button>
+		<button @onclick="GoBack">Back</button>
+	</div>
+}
+
+@code {
+
+	private TodoItem todo;
+
+	[Parameter]
+	public string Id { get; set; }
+
+
+	public void GoBack()
+	{
+		NavigationManager.NavigateTo("todo");
+	}
+
+	public async Task Save()
+	{
+		await TodoService.UpdateTodoItem(todo);
+
+		GoBack();
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		if(Guid.TryParse(Id, out Guid todoId))
+		{
+			todo = await TodoService.GetTodoById(todoId);
+
+			if (todo == null)
+			{
+				NavigationManager.NavigateTo("Error");
+			}
+		}
+		else
+		{
+			NavigationManager.NavigateTo("Error");
+		}
+
+	}
+}

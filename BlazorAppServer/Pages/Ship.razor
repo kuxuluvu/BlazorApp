@@ -1,0 +1,51 @@
+﻿@using BlazorAppServer.Data
+@inject IJSRuntime JsRunTime
+
+@page "/ships"
+<h2>Ship Form</h2>
+
+<EditForm Model="startShip" OnValidSubmit="@HandleValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div class="form-group">
+		<label for="identifier">Identifier: </label>
+		<InputText id="identifier" @bind-Value="startShip.Identifier" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="description">Description: </label>
+		<InputTextArea id="description" @bind-Value="startShip.Description" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="classification">Primary Classification: </label>
+		<InputSelect id="classification" @bind-Value="startShip.Classification" class="form-control">
+			<option value="">Select classification ...</option>
+			<option value="Exploration">Exploration</option>
+			<option value="Diplomacy">Diplomacy</option>
+			<option value="Defense">Defense</option>
+		</InputSelect>
+	</div>
+	<div class="form-group">
+		<label for="accomodation">Maximum Accomodation: </label>
+		<InputNumber id="accomodation" @bind-Value="startShip.MaximumAccomodation" class="form-control" />
+	</div>
+	<div class="form-group custom-control custom-checkbox">
+		<InputCheckbox id="valid" @bind-Value="startShip.IsValidateDesign" class="custom-control-input" />
+		<label for="valid" class="custom-control-label"> Engineering Approval</label>
+	</div>
+	<div class="form-group">
+		<label for="productionDate">Production Date: </label>
+		<InputDate id="productionDate" @bind-Value="startShip.ProductionDate" class="form-control" />
+	</div>
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+	private StartShip startShip = new StartShip();
+
+	private void HandleValidSubmit()
+	{
+		var objectStr = Newtonsoft.Json.JsonConvert.SerializeObject(startShip);
+		JsRunTime.InvokeVoidAsync("BlazorApp.logDataJson", objectStr);
+	}
+}

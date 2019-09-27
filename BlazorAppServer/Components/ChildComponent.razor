@@ -1,0 +1,34 @@
+﻿
+
+<div class="panel panel-default">
+	<div class="panel-heading">@Title</div>
+	<div class="panel-boy">@ChildContent</div>
+
+	<button class="btn btn-primary" @onclick="OnClick" title="Trigger a Parent component method">
+		@(ShowText ? "Hide" : "Show")
+	</button>
+
+	<p> Year: @Year</p>
+</div>
+
+
+@code {
+	[Parameter]
+	public string Title { get; set; }
+
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+	[Parameter]
+	public bool ShowText { get; set; }
+
+
+	[Parameter]
+	public int Year { get; set; }
+
+	[Parameter]
+	public EventCallback<int> YearChanged { get; set; }
+}

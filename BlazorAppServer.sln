@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppServer", "BlazorAppServer\BlazorAppServer.csproj", "{D159ACA3-DA08-44CE-8ADD-CB26B6E6CCFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp.Auth", "BlazorApp.Auth\BlazorApp.Auth.csproj", "{E3C3681A-3936-4536-BA1F-435B38F1886D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D159ACA3-DA08-44CE-8ADD-CB26B6E6CCFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D159ACA3-DA08-44CE-8ADD-CB26B6E6CCFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D159ACA3-DA08-44CE-8ADD-CB26B6E6CCFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D159ACA3-DA08-44CE-8ADD-CB26B6E6CCFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C3681A-3936-4536-BA1F-435B38F1886D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C3681A-3936-4536-BA1F-435B38F1886D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C3681A-3936-4536-BA1F-435B38F1886D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C3681A-3936-4536-BA1F-435B38F1886D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A713887-BB90-479F-AC17-77679FCEB399}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,46 @@
+﻿<div style="padding:20px 0">
+	Password:
+	<input @oninput="OnPasswordChanged"
+		   required
+		   type="@(showPassword ? "text": "password")"
+		   value="@Password" />
+	<button class="btn btn-primary" @onclick="ToggleShowPassword">
+		Show password
+	</button>
+
+	<span class="text-danger">@validateMessage</span>
+</div>
+
+@code {
+	private bool showPassword;
+	private string password;
+	private string validateMessage;
+
+	[Parameter]
+	public string Password
+	{
+		get => password ?? string.Empty;
+
+		set
+		{
+			if (password != value)
+			{
+				validateMessage = value.Contains(' ') ? "Spaces not allowed!" : string.Empty;
+				password = value;
+			}
+		}
+	}
+
+	[Parameter]
+	public EventCallback<string> PasswordChanged { get; set; }
+
+	private Task OnPasswordChanged(ChangeEventArgs e)
+	{
+		return PasswordChanged.InvokeAsync(e.Value.ToString());
+	}
+
+	private void ToggleShowPassword()
+	{
+		showPassword = !showPassword;
+	}
+}

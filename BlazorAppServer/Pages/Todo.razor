@@ -1,0 +1,96 @@
+﻿@using BlazorAppServer.Data
+@inject TodoService TodoService
+@inject IJSRuntime JsRunTime
+@page "/todo"
+<style>
+	.todo-list li {
+		list-style-type: none;
+		padding: 2px 0;
+	}
+
+	.todo-item {
+		display: inline-block;
+		width: 250px;
+	}
+</style>
+@if (todos == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<h1>Todo (@todos.Count(x => !x.IsDone))</h1>
+	<ul class="todo-list">
+		@foreach (var todo in todos)
+		{
+			<li>
+				<div class="todo-item">
+					<input type="checkbox"
+						   @bind="@todo.IsDone" />
+					<a href="todo/@todo.Id.ToString()">@todo.Title</a>
+				</div>
+				<button @onclick="@(e=> DeleteTodo(todo.Id))">X</button>
+			</li>
+		}
+	</ul>
+	<br />
+
+	<div style="margin-bottom:10px">
+		<input placeholder="Something todo"
+			   @bind="newTodo"
+			   @bind:event="oninput"
+			   @onkeypress="OnKeyPress" />
+		<button @onclick="AddTodo">Add todo</button>
+	</div>
+}
+
+
+@code {
+
+	private string newTodo;
+	private List<TodoItem> todos;
+	private bool autoScroll;
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		todos = await TodoService.GetTodos();
+	}
+
+	private async Task AddTodo()
+	{
+
+		if (!string.IsNullOrWhiteSpace(newTodo))
+		{
+			await TodoService.AddTodo(newTodo);
+
+			newTodo = string.Empty;
+		}
+	}
+
+	private async Task OnKeyPress(KeyboardEventArgs args)
+	{
+		if (args.Key == "Enter")
+		{
+			await AddTodo();
+		}
+	}
+
+	private async Task DeleteTodo(Guid id)
+	{
+		var result = await TodoService.DeleteTodo(id);
+		if (!result)
+		{
+			await JsRunTime.InvokeVoidAsync("BlazorApp.alertErrorDelete");
+		}
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (autoScroll)
+		{
+			autoScroll = false;
+			await JsRunTime.InvokeVoidAsync("BlazorApp.autoScrollWindow");
+		}
+	}
+}
